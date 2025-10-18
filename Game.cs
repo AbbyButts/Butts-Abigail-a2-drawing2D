@@ -11,17 +11,17 @@ namespace MohawkGame2D
     /// </summary>
     public class Game
     {
-        // ---------- constants ----------
+        //  constants 
         const int NUM_BUBBLES = 60;
         const int MAX_PELLETS = 120;
 
-        // ---------- state ----------
+        // state 
         Vector2[] bubbles = new Vector2[NUM_BUBBLES]; // array #1
         Pellet[] pellets = new Pellet[MAX_PELLETS]; // array #2
         System.Random rng = new System.Random();
         int frame = 0;
 
-        // ---------- colours (RGBA) ----------
+        //  colours
         readonly Color WATER = new Color(0x14, 0x80, 0x78, 0xFF);
         readonly Color GLASS = new Color(0x7A, 0xC9, 0xDF, 0xFF);
         readonly Color SAND = new Color(0xD2, 0xB0, 0x80, 0xFF);
@@ -31,7 +31,7 @@ namespace MohawkGame2D
         readonly Color FISH2 = new Color(0xFF, 0x0F, 0x00, 0xFF);
         readonly Color FOOD = new Color(0x7A, 0x4F, 0x2B, 0xFF); // brown pellets
 
-        // simple pellet record
+        // pellet record
         struct Pellet
         {
             public bool Active;
@@ -78,8 +78,9 @@ namespace MohawkGame2D
             int sandH = Math.Max(6, tankH / 8);
             int sandTop = m + tankH - sandH;
 
-            // 1) clear background (prevents streaks)
+            // 1) clear background 
             Raylib.ClearBackground(WATER);
+            Raylib.DrawRectangle(m, m, tankW, tankH, WATER);
 
             // 2) input: drop pellets on click (a small handful)
             if (Raylib.IsMouseButtonPressed(MouseButton.Left))
@@ -124,7 +125,7 @@ namespace MohawkGame2D
             Raylib.DrawRectangleLines(m, m, tankW, tankH, GLASS);           // glass outline
             Raylib.DrawRectangle(m, sandTop, tankW, sandH, SAND);           // sand
 
-            // seaweed clumps every step pixels
+            // seaweed clumps 
             int step = Math.Max(24, tankH / 80);
             for (int x = m + 30; x < m + tankW - 40; x += step)
             {
@@ -141,7 +142,7 @@ namespace MohawkGame2D
                 if (pellets[i].Active)
                     Raylib.DrawCircle((int)pellets[i].Pos.X, (int)pellets[i].Pos.Y, 3, FOOD);
 
-            // 8) draw fish LAST so they’re on top
+            // 8) draw fish 
             // gentle swim wiggle using sin()
             int wiggle1 = (int)(MathF.Sin(frame * 0.05f) * 6);
             int wiggle2 = (int)(MathF.Sin(frame * 0.04f + 1.3f) * 8);
